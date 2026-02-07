@@ -7,22 +7,24 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-  /* BODY & BACKGROUND */
   body {
     font-family: 'Roboto', sans-serif;
-    margin: 0; padding: 0;
-    display: flex; justify-content: center; align-items: center;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: radial-gradient(circle at top left, #330000, #660000, #990000);
     color: #fff;
   }
 
-  /* CONTAINER */
   .container {
     background: rgba(20,0,0,0.9);
-    padding: 40px;
+    padding: 40px 30px;
     border-radius: 25px;
-    width: 480px;
+    width: 500px;
     box-shadow: 0 20px 50px rgba(255,0,0,0.5);
     border: 2px solid #ff0000;
     backdrop-filter: blur(10px);
@@ -32,7 +34,6 @@
     transform: scale(1.02);
   }
 
-  /* HEADINGS */
   h1 {
     font-size: 2rem;
     margin-bottom: 12px;
@@ -49,11 +50,37 @@
     margin-bottom: 20px;
   }
 
-  /* INPUTS */
-  input[type=file], input[type=number] {
+  /* Upload Button */
+  .upload-btn {
     display: block;
     width: 100%;
+    padding: 14px;
     margin: 12px 0;
+    border-radius: 15px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(90deg, #ff0000, #ff4d4d);
+    box-shadow: 0 4px 15px rgba(255,0,0,0.6);
+    transition: 0.3s;
+  }
+  .upload-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255,0,0,0.8);
+  }
+
+  /* Hidden File Input */
+  #videoInput {
+    display: none;
+  }
+
+  input[type=number] {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
     padding: 12px;
     border-radius: 12px;
     border: 2px solid #ff0000;
@@ -63,12 +90,11 @@
     outline: none;
     transition: 0.2s;
   }
-  input[type=file]:hover, input[type=number]:hover {
+  input[type=number]:hover {
     border-color: #ff4d4d;
   }
 
-  /* BUTTONS */
-  button {
+  button.generate-btn {
     width: 100%;
     padding: 14px;
     margin-top: 15px;
@@ -80,23 +106,20 @@
     transition: 0.2s;
     box-shadow: 0 4px 15px rgba(255,0,0,0.6);
     text-transform: uppercase;
-  }
-  .generate-btn {
     background: linear-gradient(90deg, #ff0000, #ff4d4d);
     color: #fff;
   }
-  .generate-btn:hover {
+  button.generate-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(255,0,0,0.8);
   }
-  .generate-btn:disabled {
+  button.generate-btn:disabled {
     background: #660000;
     cursor: not-allowed;
     opacity: 0.6;
     box-shadow: none;
   }
 
-  /* PROGRESS BAR */
   .progress-bar {
     height: 10px;
     background: linear-gradient(90deg, #ff4d4d, #ff0000);
@@ -107,7 +130,6 @@
     box-shadow: 0 2px 8px rgba(255,0,0,0.6);
   }
 
-  /* CLIPS */
   .clips {
     margin-top: 25px;
     max-height: 350px;
@@ -136,11 +158,17 @@
     box-shadow: 0 4px 15px rgba(255,0,0,0.5);
   }
 
-  /* INFO TEXT */
   .info {
     margin-bottom: 12px;
     color: #ff9999;
     font-size: 0.95rem;
+    text-align: center;
+  }
+
+  footer {
+    margin-top: 30px;
+    color: #ff6666;
+    font-size: 0.9rem;
     text-align: center;
   }
 </style>
@@ -150,14 +178,21 @@
 <div class="container">
   <h1>⚡ Long Video → Shorts</h1>
   <p>Upload a video, choose number of clips & seconds, watch in real-time!</p>
+
+  <label class="upload-btn" for="videoInput">Upload Video</label>
   <input type="file" id="videoInput" accept="video/*">
   <div class="info" id="videoInfo">No video uploaded</div>
+
   <input type="number" id="numClips" placeholder="Number of clips (default 5)" min="1">
   <input type="number" id="clipSeconds" placeholder="Seconds per clip (default 60)" min="1">
+
   <button class="generate-btn" id="generateBtn" disabled>Generate Shorts</button>
+
   <div class="progress-bar" id="progressBar"></div>
   <div class="clips" id="clipsContainer"></div>
 </div>
+
+<footer>Made by Anmol</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.3/dist/ffmpeg.min.js"></script>
 <script>
@@ -197,7 +232,6 @@
     progressBar.style.width = '0%';
 
     if (!ffmpeg.isLoaded()) await ffmpeg.load();
-
     ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(videoFile));
 
     for (let i = 0; i < numClips; i++) {
@@ -232,6 +266,5 @@
     generateBtn.disabled = false;
   });
 </script>
-
 </body>
 </html>
