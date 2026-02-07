@@ -6,78 +6,24 @@
 <title>Long Video → Shorts | Red Power UI</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-  body {
-    font-family: 'Roboto', sans-serif;
-    margin:0; padding:0; min-height:100vh;
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    background: radial-gradient(circle at top left, #330000, #660000, #990000);
-    color:#fff;
-  }
-
-  .container {
-    background: rgba(20,0,0,0.9);
-    padding:40px 30px; border-radius:25px; width:500px;
-    box-shadow:0 20px 50px rgba(255,0,0,0.5);
-    border:2px solid #ff0000; backdrop-filter: blur(10px);
-    transition: transform 0.3s ease;
-  }
+  body { font-family: 'Roboto', sans-serif; margin:0; padding:0; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background: radial-gradient(circle at top left, #330000, #660000, #990000); color:#fff; }
+  .container { background: rgba(20,0,0,0.9); padding:40px 30px; border-radius:25px; width:500px; box-shadow:0 20px 50px rgba(255,0,0,0.5); border:2px solid #ff0000; backdrop-filter: blur(10px); transition: transform 0.3s ease; }
   .container:hover { transform: scale(1.02); }
-
-  h1 {
-    font-size:2rem; margin-bottom:12px; text-align:center;
-    background:linear-gradient(90deg,#ff0000,#ff4d4d);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 0 8px #ff0000;
-  }
+  h1 { font-size:2rem; margin-bottom:12px; text-align:center; background:linear-gradient(90deg,#ff0000,#ff4d4d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 8px #ff0000; }
   p { font-size:1rem; color:#ffcccc; text-align:center; margin-bottom:20px; }
-
-  button.upload-btn {
-    width:100%; padding:14px; margin:12px 0; border-radius:15px; border:none;
-    font-size:1rem; font-weight:bold; cursor:pointer; text-align:center; color:#fff;
-    background: linear-gradient(90deg, #ff0000, #ff4d4d);
-    box-shadow:0 4px 15px rgba(255,0,0,0.6); transition:0.3s;
-  }
+  button.upload-btn { width:100%; padding:14px; margin:12px 0; border-radius:15px; border:none; font-size:1rem; font-weight:bold; cursor:pointer; text-align:center; color:#fff; background: linear-gradient(90deg, #ff0000, #ff4d4d); box-shadow:0 4px 15px rgba(255,0,0,0.6); transition:0.3s; }
   button.upload-btn:hover { transform: scale(1.05); box-shadow:0 6px 20px rgba(255,0,0,0.8); }
-
   input[type=file] { display:none; }
-
-  input[type=number] {
-    display:block; width:100%; margin:10px 0; padding:12px; border-radius:12px;
-    border:2px solid #ff0000; background: rgba(50,0,0,0.7); color:#fff;
-    font-size:1rem; outline:none; transition:0.2s;
-  }
+  input[type=number] { display:block; width:100%; margin:10px 0; padding:12px; border-radius:12px; border:2px solid #ff0000; background: rgba(50,0,0,0.7); color:#fff; font-size:1rem; outline:none; transition:0.2s; }
   input[type=number]:hover { border-color:#ff4d4d; }
-
-  button.generate-btn {
-    width:100%; padding:14px; margin-top:15px; border:none; border-radius:15px;
-    font-size:1rem; font-weight:bold; cursor:pointer; transition:0.2s;
-    box-shadow:0 4px 15px rgba(255,0,0,0.6); text-transform:uppercase;
-    background:linear-gradient(90deg,#ff0000,#ff4d4d); color:#fff;
-  }
+  button.generate-btn { width:100%; padding:14px; margin-top:15px; border:none; border-radius:15px; font-size:1rem; font-weight:bold; cursor:pointer; transition:0.2s; box-shadow:0 4px 15px rgba(255,0,0,0.6); text-transform:uppercase; background:linear-gradient(90deg,#ff0000,#ff4d4d); color:#fff; }
   button.generate-btn:hover { transform: scale(1.05); box-shadow:0 6px 20px rgba(255,0,0,0.8); }
   button.generate-btn:disabled { background:#660000; cursor:not-allowed; opacity:0.6; box-shadow:none; }
-
-  .progress-bar {
-    height:10px; background:linear-gradient(90deg,#ff4d4d,#ff0000);
-    border-radius:5px; width:0%; margin-top:15px; transition:width 0.3s ease;
-    box-shadow:0 2px 8px rgba(255,0,0,0.6);
-  }
-
-  .clips {
-    margin-top:25px; max-height:350px; overflow-y:auto;
-  }
-  .clip {
-    background: rgba(50,0,0,0.8); padding:14px; border-radius:18px;
-    margin-bottom:15px; transition:0.2s; border:1px solid #ff0000;
-    box-shadow:0 4px 15px rgba(255,0,0,0.5);
-  }
+  .progress-bar { height:10px; background:linear-gradient(90deg,#ff4d4d,#ff0000); border-radius:5px; width:0%; margin-top:15px; transition:width 0.3s ease; box-shadow:0 2px 8px rgba(255,0,0,0.6); }
+  .clips { margin-top:25px; max-height:350px; overflow-y:auto; }
+  .clip { background: rgba(50,0,0,0.8); padding:14px; border-radius:18px; margin-bottom:15px; transition:0.2s; border:1px solid #ff0000; box-shadow:0 4px 15px rgba(255,0,0,0.5); }
   .clip:hover { transform:scale(1.03); background:rgba(70,0,0,0.9); box-shadow:0 6px 20px rgba(255,0,0,0.7); }
-
-  video {
-    width:100%; border-radius:12px; margin-top:6px; border:1px solid #ff0000;
-    box-shadow:0 4px 15px rgba(255,0,0,0.5);
-  }
-
+  video { width:100%; border-radius:12px; margin-top:6px; border:1px solid #ff0000; box-shadow:0 4px 15px rgba(255,0,0,0.5); }
   .info { margin-bottom:12px; color:#ff9999; font-size:0.95rem; text-align:center; }
   footer { margin-top:30px; color:#ff6666; font-size:0.9rem; text-align:center; }
 </style>
@@ -119,28 +65,27 @@
 
   let videoFile = null;
 
-  // Click button triggers file input
-  uploadBtn.addEventListener('click', () => videoInput.click());
+  // ✅ Trigger file input reliably
+  uploadBtn.addEventListener('click', () => {
+    videoInput.value = null; // reset previous file
+    videoInput.click();
+  });
 
-  // Detect file selection
   videoInput.addEventListener('change', (e) => {
     videoFile = e.target.files[0];
     if(videoFile){
       videoInfo.textContent = `Uploaded: ${videoFile.name} (${Math.round(videoFile.size / 1024 / 1024)} MB)`;
       generateBtn.disabled = false;
-      clipsContainer.innerHTML = '';
-      progressBar.style.width = '0%';
     } else {
       videoInfo.textContent = 'No video uploaded';
       generateBtn.disabled = true;
     }
   });
 
-  // Generate clips
   generateBtn.addEventListener('click', async () => {
+    if(!videoFile) return;
     const numClips = parseInt(numClipsInput.value) || 5;
     const clipSeconds = parseInt(clipSecondsInput.value) || 60;
-    if(!videoFile) return;
 
     generateBtn.disabled = true;
     clipsContainer.innerHTML = '';
@@ -164,9 +109,8 @@
         clipsContainer.appendChild(clipDiv);
 
         progressBar.style.width = `${((i+1)/numClips)*100}%`;
-      }catch(err){ console.error('Error creating clip:',err); }
+      } catch(err){ console.error('Error:',err); }
     }
-
     generateBtn.disabled = false;
   });
 </script>
